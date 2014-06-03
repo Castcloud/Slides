@@ -19,7 +19,7 @@
 	.slide:first-child h1 {
 		font-size: 128px;
 		color: #0099cc;
-		margin: 0;
+		padding: 0;
 	}
 
 	.slide:first-child h2 {
@@ -30,12 +30,13 @@
 		text-align: center;
 	}
 
-	.slide {
-	}
-
 	h1 {
 		font-size: 64px;
-		margin: 50px;
+		padding: 50px;
+	}
+
+	.vertical h1 {
+		padding: 0;
 	}
 
 	ul {
@@ -99,13 +100,114 @@
 		</ul>
 	</div>
 	<div class="slide">
-		<iframe src="/castcloud/client" allowfullscreen="true"></iframe>
+		<h1>Problemstillingen</h1>
+		<ul>
+			<li>De fleste har lokale bibliotek</li>
+			<li>De som har synkronisering er lukket</li>
+			<ul>
+				<li>iTunes</li>
+				<li>Pocket Casts</li>
+			</ul>
+		</ul>
+	</div>
+	<div class="slide">
+		<h1>Hva er Castcloud?</h1>
+		<ul>
+			<li>Netflix for podcasts</li>
+			<li>Åpen, fri, libre, GPL!</li>
+			<li>Crawler podcastfeeds</li>
+			<li>Sentral lagring for</li>
+			<ul>
+				<li>Avspillingsprogresjon</li>
+				<li>Episodearkiv</li>
+				<li>Innstillinger</li>
+			</ul>
+		</ul>
+	</div>
+	<div class="slide">
+		<h1>Oppgavens progresjon</h1>
+		<ul>
+			<li>Designe utkast av APIets struktur</li>
+			<li>Utvikle tjener</li>
+			<li>Utvikle klient</li>
+			<li>Dokumentere APIet</li>
+		</ul>
+	</div>
+	<div class="slide">
+		<iframe src="http://castcloud.org/docs.html" allowfullscreen="true"></iframe>
 	</div>
 	<div class="slide" style="background:#FFF">
-		<iframe src="/castcloud/utils/swagger-ui" allowfullscreen="true"></iframe>
+		<iframe src="http://api.castcloud.org/utils/swagger-ui" allowfullscreen="true"></iframe>
 	</div>
 	<div class="slide" style="background:#FFF">
-		<iframe src="/castcloud/management" allowfullscreen="true"></iframe>
+		<iframe src="http://vga.pw/management" allowfullscreen="true"></iframe>
+	</div>
+	<div class="slide" style="background:#FFF">
+		<iframe src="http://api.castcloud.org/management" allowfullscreen="true"></iframe>
+	</div>
+	<div class="slide">
+		<iframe src="http://vga.pw/client" allowfullscreen="true"></iframe>
+	</div>
+	<div class="slide">
+		<iframe src="http://api.castcloud.org/client" allowfullscreen="true"></iframe>
+	</div>
+	<div class="slide">
+		<h1>Samarbeid</h1>
+		<ul>
+			<li>Faste arbeidstidspunkter</li>
+			<li>God stemning</li>
+			<li>Satt i gruppe, jobbet separat</li>
+		</ul>
+	</div>
+	<div class="slide">
+		<h1>Utfordringer</h1>
+		<ul>
+			<li>Ingen rom</li>
+			<li>For lang tid på kravspesifikasjon</li>
+			<li>Begynte sent på dokumentasjon av API</li>
+			<li>Har ikke kontaktet utviklere</li>
+			<li>Referanseimplementasjonene var ikke bare 1-2-3</li>
+		</ul>
+	</div>
+	<div class="slide">
+		<h1>Gantt</h1>
+	</div>
+	<div class="slide">
+		<h1>Hvor langt kom vi?</h1>
+		<ul>
+			<li>God dokumentasjon</li>
+			<li>Tjenerimplementasjonen er ganske stabil</li>
+			<li>Management kan installere og redigere brukere</li>
+			<li>Klienten er svært brukbar</li>
+		</ul>
+	</div>
+	<div class="slide">
+		<h1>Hva rakk vi ikke?</h1>
+		<ul>
+			<li>Tilbakemelding fra andre utviklere</li>
+			<li>Svare utviklere og forbedre utformingen</li>
+			<li>Takeout</li>
+			<li>Fortsatt mye arbeid gjenstår med referanseimplementasjonene</li>
+		</ul>
+	</div>
+	<div class="slide">
+		<h1>Oppsummering</h1>
+		<ul>
+			<li>Svært fornøyd med det vi har oppnådd</li>
+			<li>Lært mye</li>
+			<ul>
+				<li>PHP, HTML5, podcasting, iTunes, synkronisering, REST</li>
+			</ul>
+			<li>Ikke klart for at folk skal gå amok, enda</li>
+		</ul>
+	</div>
+	<div class="slide">
+		<h1>Spørsmål?</h1>
+		<ul>
+			<li>github.com/castcloud</li>
+			<li>castcloud.org</li>
+			<li>castcloud@castcloud.org</li>
+		</ul>
 	</div>
 
 	<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.0/jquery.min.js"></script>
@@ -129,7 +231,7 @@
 		$("body").css("width", (slides.length * 100) + "%");
 		slides.css("width", (100 / slides.length) + "%");
 
-		slide = $("body").scrollLeft() * ($("body").width() / $(".slide:first-child").width()) / $("body").width();
+		slide = Math.round($("body").scrollLeft() * ($("body").width() / $(".slide:first-child").width()) / $("body").width());
 
 		$(".vertical").each(function(index, el) {
 			$(el).css("padding-top", (window.innerHeight / 2 - $(el).height() / 2) + "px");
@@ -146,9 +248,11 @@
 		});
 
 		$("iframe").each(function(index, el) {
-			$(el.contentWindow.document).keydown(function(e) {
-				slideHotkeys(e);
-			});
+			$(this).load(function() {
+				$(el.contentWindow.document).keydown(function(e) {
+					slideHotkeys(e);
+				});
+			});			
 		});
 	});
 
