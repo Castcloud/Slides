@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<style>
+	* {
+		padding: 0;
+		margin: 0;
+	}
+
+	html, body {
+		height: 100%;
+	}
+
+	.btn {
+		float: left;
+		background: #000;
+		height: 100%;
+		width: 50%;
+	}
+	</style>
+</head>
+<body>
+	<div id="prev" class="btn"></div>
+	<div id="next" class="btn"></div>
+	<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.0/jquery.min.js"></script>
+	<script src="http://158.39.116.149:3001/socket.io/socket.io.js"></script>
+	<script>
+	var socket = io.connect('http://158.39.116.149:3001');
+	
+	$(document).ready(function() {
+		$("#prev").on("touchstart", function() { socket.emit("action", "prev"); });
+		$("#next").on("touchstart", function() { socket.emit("action", "next"); });
+	});
+	</script>
+</body>
+</html>
